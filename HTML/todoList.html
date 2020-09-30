@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title>todoList</title>
+    <!-- 外部引入 -->
+    <script src="libs/jquery/jquery-3.3.1.min.js"></script>
+    <script src="libs/vue/vue@2.6.11.js"></script>
+  </head>
+  <body>
+    <div id="app">
+      <input v-model="inputValue"/>
+      <button @click="submitClick">提交</button>
+      <ul>
+        <!-- <li v-for="item in items"> {{ item }} </li> -->
+
+        <todo-item
+          v-bind:content="item"
+          v-bind:index="index"
+          v-for="(item,index) in items"
+          @delete="deleteEvent"
+        ></todo-item>
+      </ul>
+    </div>
+  </body>
+  <script>
+    // Vue.component('TodoItem', {
+    //   props: ['content'],
+    //   template: '<li> {{ content }} </li>'
+    // })
+
+    new Vue ({
+      el: '#app',
+      components: {
+        TodoItem: {
+          props: ['content','index'],
+          template: '<li @click="itemClick"> {{ content }} </li>',
+          methods: {
+            itemClick() {
+              this.$emit('delete',this.index);
+            }
+          }
+        }
+      },
+      data() {
+        return {
+          inputValue: '',
+          items: []
+        }
+      },
+      methods: {
+        submitClick() {
+          this.items.push(this.inputValue);
+          this.inputValue = '';
+        },
+        deleteEvent(index) {
+          this.items.splice(index,1);
+        }
+      }
+    })
+  </script>
+</html>
