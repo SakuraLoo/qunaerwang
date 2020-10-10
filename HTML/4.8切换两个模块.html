@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <!-- 外部引入 -->
+    <script src="libs/jquery/jquery-3.3.1.min.js"></script>
+    <script src="libs/vue/vue@2.6.11.js"></script>
+  </head>
+
+  <body>
+    <div id="app">
+      <component :is="type"></component>
+      <!-- <child-one v-if="type === 'child-one'">child1</child-one>
+      <child-two v-if="type === 'child-two'">child2</child-two> -->
+      <button @click="ClickChange">change</button>
+    </div>
+
+    <script>
+      const child1 = {
+        template: '<div v-once>child1</div>'
+      }
+      const child2 = {
+        template: '<div v-once>child2</div>'
+      }
+
+      new Vue ({
+        el: '#app',
+        components: {
+          'child-one': child1,
+          'child-two': child2
+        },
+        data () {
+          return {
+            type: 'child-one'
+          }
+        },
+        methods: {
+          ClickChange () {
+            this.type = this.type === 'child-one' ? 'child-two' : 'child-one';
+          }
+        },
+      })
+    </script>
+  </body>
+</html>

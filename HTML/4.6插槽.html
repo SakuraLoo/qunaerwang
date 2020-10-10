@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <!-- 外部引入 -->
+    <script src="libs/jquery/jquery-3.3.1.min.js"></script>
+    <script src="libs/vue/vue@2.6.11.js"></script>
+  </head>
+
+  <body>
+    <div id="app">
+      <body-content>
+        <!-- <div class="header" slot="header">自定义标题</div> -->
+        <div class="footer" slot="footer">自定义页脚</div>
+      </body-content>
+    </div>
+
+    <script>
+      const container = {
+        template: 
+        `<div>
+          <slot name="header">
+            <h3>默认标题</h3>
+          </slot>
+          <div class="contianer">页面主要内容</div>
+          <slot name="footer">默认页脚</slot>
+        </div>
+        `
+      }
+
+      new Vue ({
+        el: '#app',
+        components: {
+          'body-content': container
+        }
+      })
+    </script>
+  </body>
+</html>

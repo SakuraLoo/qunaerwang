@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title>点击自增,求和--在父组件使用子组件</title>
+    <!-- 外部引入 -->
+    <script src="libs/jquery/jquery-3.3.1.min.js"></script>
+    <script src="libs/vue/vue@2.6.11.js"></script>
+  </head>
+  <body>
+    <div id="app">
+      <counter ref="one" @change="WatchCounter"></counter>
+      <counter ref="two" @change="WatchCounter"></counter>
+      <p> {{ total }} </p>
+    </div>
+  </body>
+  <script>
+    /**
+    * 1.注册子组件counter
+    *  > 点击自身：@click -> number++
+    *  > 子传递父：@emit('change'); 父: @change="function"
+    * 2.在父组件中操纵
+    *  > 绑定ref="one",function中: this.$refs.one
+    **/
+    new Vue ({
+      el: '#app',
+      // 子组件
+      components: {
+        counter: {
+          template: '<p @click="Clickme2"> {{ number }} </p>',
+          data () {
+            return {
+              number: 0
+            }
+          },
+          methods: {
+            Clickme2 () {
+              this.number++;
+              this.$emit('change'); // 触发事件，发送给父组件来监听
+            }
+          }
+        }
+      },
+      // 父组件
+      data() {
+        return {
+          total: 0
+        }
+      },
+      methods: {
+        WatchCounter () {
+          this.total = this.$refs.one.number + this.$refs.two.number;
+        }
+      },
+    })
+  </script>
+</html>

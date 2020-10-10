@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <!-- 外部引入 -->
+    <script src="libs/jquery/jquery-3.3.1.min.js"></script>
+    <script src="libs/vue/vue@2.6.11.js"></script>
+  </head>
+
+  <body>
+    <div id="root">
+      <child content="hello world"></child>
+    </div>
+
+    <script>
+      Vue.component('child', {
+        props: {
+          content: {
+            type: String,
+            // required: false, // 不报错
+            // default: '默认',
+            validator: function (value) {
+              return (value.length > 5) // 为啥没有用
+            }
+          }
+        },
+        template: '<div> {{ content }} </div>'
+      })
+
+      new Vue ({
+        el: '#root'
+      })
+    </script>
+  </body>
+</html>

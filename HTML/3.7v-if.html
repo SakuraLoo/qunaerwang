@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title>v-if</title>
+    <!-- 外部引入 -->
+    <script src="libs/jquery/jquery-3.3.1.min.js"></script>
+    <script src="libs/vue/vue@2.6.11.js"></script>
+    <style>
+      ul {
+        min-height: 20px;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="app">
+      <ul @click="Click1">
+        <p v-if="show1" data-test="v-if" >message</p>
+        <p v-if="show1" data-test="v-show">message</p>
+      </ul>
+
+      <ul @click="Click2">
+        <p v-if="show2 == 'A'">A</p>
+        <p v-else-if="show2 == 'B'">B</p>
+        <p v-else="show2 == 'C'">C</p>
+      </ul>
+
+      <ul>
+        <p v-if="show3">用户名：<input key="username"/></p>
+        <p v-else>密码：<input key="password"/></p>
+        <button @click="ClearBtnClick">切换input</button>
+      </ul>
+    </div>
+  </body>
+  <script>
+    new Vue ({
+      el: '#app',
+      data () {
+        return {
+          show1: false,
+          show2: 'A',
+          show3: false
+        }
+      },
+      methods: {
+        Click1 () {
+          this.show1 = this.show1 == true ? false : true;
+        },
+        Click2 () {
+          this.show2 = this.show2=='A'?'B' : this.show2=='B'?'C' : this.show2== 'C'?'A':'A';
+        },
+        ClearBtnClick () {
+          this.show3 = true;
+        }
+      }
+    })
+  </script>
+</html>

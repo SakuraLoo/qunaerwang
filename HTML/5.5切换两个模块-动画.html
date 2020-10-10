@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <!-- 外部引入 -->
+    <script src="libs/jquery/jquery-3.3.1.min.js"></script>
+    <script src="libs/vue/vue@2.6.11.js"></script>
+    <style>
+      .v-enter, .v-leave-to {
+        opacity: 0;
+      }
+      .v-enter-active, .v-leave-active {
+        transition: opacity 1s;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div id="app">
+      <transition mode="out-in">
+        <!-- <div v-if="show" key="child-one">child1</div>
+        <div v-else key="child-two">child2</div> -->
+
+        <!-- <child-one v-if="show">child1</child-one>
+        <child-two v-else>child2</child-two> -->
+
+        <component :is="type"></component>
+      </transition>
+      <button @click="ClickChange">change</button>
+    </div>
+
+    <script>
+      const child1 = {
+        template: '<div v-once>child1</div>'
+      }
+      const child2 = {
+        template: '<div v-once>child2</div>'
+      }
+
+      new Vue ({
+        el: '#app',
+        components: {
+          'child-one': child1,
+          'child-two': child2
+        },
+        data () {
+          return {
+            // show: true,
+            type: 'child-one'
+          }
+        },
+        methods: {
+          ClickChange () {
+            // this.show = !this.show;
+            this.type = this.type === 'child-one' ? 'child-two' : 'child-one';
+          }
+        },
+      })
+    </script>
+  </body>
+</html>
